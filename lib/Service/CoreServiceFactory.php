@@ -14,7 +14,7 @@ class CoreServiceFactory extends \Safepay\Service\AbstractServiceFactory
    */
   private static $classMap = [
 
-    // Class Map: The end of the section generated from our OpenAPI spec
+    'order' => OrderService::class
   ];
 
   protected function getServiceClass($name)
