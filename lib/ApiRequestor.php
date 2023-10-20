@@ -188,6 +188,7 @@ class ApiRequestor
    */
   public function handleErrorResponse($rbody, $rcode, $rheaders, $resp)
   {
+
     if (!\is_array($resp) || !isset($resp['status']['errors'])) {
       $msg = "Invalid response object from API: {$rbody} "
         . "(HTTP response code was {$rcode})";
@@ -197,7 +198,6 @@ class ApiRequestor
 
     // errorData is the array of error messages
     $errorData = $resp['status']['errors'];
-
     $error = null;
     if (\is_array($errorData)) {
       $error = self::_specificAPIError($rbody, $rcode, $rheaders, $resp, $errorData);
@@ -220,7 +220,6 @@ class ApiRequestor
   private static function _specificAPIError($rbody, $rcode, $rheaders, $resp, $errorData)
   {
     $msg = count($errorData) === 1 ? $errorData[0] : \implode(",", $errorData);
-
     switch ($rcode) {
       case 400:
         return Exception\InvalidRequestException::factory($msg, $rcode, $rbody, $resp, $rheaders);

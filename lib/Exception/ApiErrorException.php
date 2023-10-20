@@ -37,15 +37,9 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     $instance = new static($message);
     $instance->setHttpStatus($httpStatus);
     $instance->setHttpBody($httpBody);
-    $instance->setJsonBody($jsonBody);
     $instance->setHttpHeaders($httpHeaders);
 
-    $instance->setRequestId(null);
-    if ($httpHeaders && isset($httpHeaders['Request-Id'])) {
-      $instance->setRequestId($httpHeaders['Request-Id']);
-    }
-
-    $instance->setError($instance->constructErrorObject());
+    $instance->setError($message);
 
     return $instance;
   }
@@ -128,91 +122,5 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
   public function setHttpStatus($httpStatus)
   {
     $this->httpStatus = $httpStatus;
-  }
-
-  /**
-   * Gets the JSON deserialized body.
-   *
-   * @return null|array<string, mixed>
-   */
-  public function getJsonBody()
-  {
-    return $this->jsonBody;
-  }
-
-  /**
-   * Sets the JSON deserialized body.
-   *
-   * @param null|array<string, mixed> $jsonBody
-   */
-  public function setJsonBody($jsonBody)
-  {
-    $this->jsonBody = $jsonBody;
-  }
-
-  /**
-   * Gets the Safepay request ID.
-   *
-   * @return null|string
-   */
-  public function getRequestId()
-  {
-    return $this->requestId;
-  }
-
-  /**
-   * Sets the Safepay request ID.
-   *
-   * @param null|string $requestId
-   */
-  public function setRequestId($requestId)
-  {
-    $this->requestId = $requestId;
-  }
-
-  /**
-   * Gets the Safepay error code.
-   *
-   * Cf. the `CODE_*` constants on {@see \Safepay\ErrorObject} for possible
-   * values.
-   *
-   * @return null|string
-   */
-  public function getSafepayCode()
-  {
-    return $this->safepayCode;
-  }
-
-  /**
-   * Sets the Safepay error code.
-   *
-   * @param null|string $safepayCode
-   */
-  public function setSafepayCode($safepayCode)
-  {
-    $this->safepayCode = $safepayCode;
-  }
-
-  /**
-   * Returns the string representation of the exception.
-   *
-   * @return string
-   */
-  public function __toString()
-  {
-    $parentStr = parent::__toString();
-    $statusStr = (null === $this->getHttpStatus()) ? '' : "(Status {$this->getHttpStatus()}) ";
-    $idStr = (null === $this->getRequestId()) ? '' : "(Request {$this->getRequestId()}) ";
-
-    return "Error sending request to Safepay: {$statusStr}{$idStr}{$this->getMessage()}\n{$parentStr}";
-  }
-
-  protected function constructErrorObject()
-  {
-    if (null === $this->jsonBody || !\array_key_exists('error', $this->jsonBody)) {
-      return null;
-    }
-
-    return \Safepay\ErrorObject::constructFrom($this->jsonBody['error']);
   }
 }
