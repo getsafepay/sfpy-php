@@ -78,18 +78,18 @@ class SafepayObject implements \ArrayAccess, \Countable, \JsonSerializable
       $values = $values->toArray();
     }
 
-    // Wipe old state before setting new.  This is useful for e.g. updating a
-    // customer, where there is no persistent card parameter.  Mark those values
-    // which don't persist as transient
-    if ($partial) {
-      $removed = new Util\Set();
-    } else {
-      $removed = new Util\Set(\array_diff(\array_keys($this->_values), \array_keys($values)));
-    }
+    // // Wipe old state before setting new.  This is useful for e.g. updating a
+    // // customer, where there is no persistent card parameter.  Mark those values
+    // // which don't persist as transient
+    // if ($partial) {
+    //   $removed = new Util\Set();
+    // } else {
+    //   $removed = new Util\Set(\array_diff(\array_keys($this->_values), \array_keys($values)));
+    // }
 
-    foreach ($removed->toArray() as $k) {
-      unset($this->{$k});
-    }
+    // foreach ($removed->toArray() as $k) {
+    //   unset($this->{$k});
+    // }
 
     $this->updateAttributes($values, $opts);
   }
@@ -108,7 +108,11 @@ class SafepayObject implements \ArrayAccess, \Countable, \JsonSerializable
       // This is necessary in case metadata is empty, as PHP arrays do
       // not differentiate between lists and hashes, and we consider
       // empty arrays to be lists.
-      $this->_values[$k] = SafepayObject::constructFrom($v, $opts);
+      if (\is_array($v)) {
+        $this->_values[$k] = SafepayObject::constructFrom($v, $opts);
+      } else {
+        $this->_values[$k] = $v;
+      }
     }
   }
 
@@ -125,6 +129,17 @@ class SafepayObject implements \ArrayAccess, \Countable, \JsonSerializable
   public function __unset($k)
   {
     unset($this->_values[$k]);
+  }
+
+  public function &__get($k)
+  {
+    // function should return a reference, using $nullval to return a reference to null
+    $nullval = null;
+    if (!empty($this->_values) && \array_key_exists($k, $this->_values)) {
+      return $this->_values[$k];
+    }
+
+    return $nullval;
   }
 
   // ArrayAccess methods
@@ -222,6 +237,23 @@ class SafepayObject implements \ArrayAccess, \Countable, \JsonSerializable
 
       return $acc;
     }, []);
+  }
+
+  /**
+   * Returns a pretty JSON representation of the Stripe object.
+   *
+   * @return string the JSON representation of the Stripe object
+   */
+  public function toJSON()
+  {
+    return \json_encode($this->toArray(), \JSON_PRETTY_PRINT);
+  }
+
+  public function __toString()
+  {
+    $class = static::class;
+
+    return $class . ' JSON: ' . $this->toJSON();
   }
 
   /**

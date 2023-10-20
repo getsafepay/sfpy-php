@@ -44,6 +44,7 @@ abstract class Util
    */
   public static function convertToSafepayObject($resource, $resp, $opts)
   {
+
     $types = \Safepay\Util\ObjectTypes::mapping;
     if (self::isList($resp)) {
       $mapped = [];
@@ -62,7 +63,6 @@ abstract class Util
 
       return $class::constructFrom($resp, $opts);
     }
-
     return $resp;
   }
 

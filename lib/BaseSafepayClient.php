@@ -16,9 +16,6 @@ class BaseSafepayClient implements SafepayClientInterface
   /** @var array<string, mixed> */
   private $config;
 
-  /** @var \Safepay\Util\RequestOptions */
-  private $defaultOpts;
-
   /**
    * Initializes a new instance of the {@link BaseSafepayClient} class.
    *
@@ -84,7 +81,7 @@ class BaseSafepayClient implements SafepayClientInterface
    */
   public function request($resource, $method, $path, $params, $opts)
   {
-    $opts = $this->defaultOpts->merge($opts, true);
+    $opts = new \Safepay\Util\RequestOptions(null, [], null);
     $baseUrl = $opts->apiBase ?: $this->getApiBase();
     $requestor = new \Safepay\ApiRequestor($this->apiKeyForRequest($opts), $baseUrl);
     list($response, $opts->apiKey) = $requestor->request($method, $path, $params, $opts->headers);
