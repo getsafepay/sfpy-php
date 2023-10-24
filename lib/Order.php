@@ -6,7 +6,7 @@ namespace Safepay;
 class Order extends ApiResource
 {
   const OBJECT_NAME = 'order';
-  const OBJECT_PATH = 'order.payments.v3';
+  const OBJECT_PATH = ':4010.payments.v3';
 
 
   use ApiOperations\Create;
@@ -18,10 +18,11 @@ class Order extends ApiResource
 
   public function instanceUrl()
   {
-    if (null === $this['token']) {
-      return '/order/payments/v3/';
+    if (null === $this->tracker->token) {
+      return ':4010/payments/v3/';
     }
 
+    $this->token = $this->tracker->token;
     return parent::instanceUrl();
   }
 

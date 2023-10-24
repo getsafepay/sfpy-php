@@ -20,7 +20,7 @@ class PaymentMethodService extends \Safepay\Service\AbstractService
    */
   public function all($parentId, $params = null, $opts = null)
   {
-    return $this->requestCollection('get', $this->buildPath('/user/customers/v1/%s/wallet/', $parentId), $params, $opts);
+    return $this->requestCollection('get', $this->buildPath(':4040/customers/v1/%s/wallet/', $parentId), $params, $opts);
   }
 
   /**
@@ -37,7 +37,7 @@ class PaymentMethodService extends \Safepay\Service\AbstractService
    */
   public function retrieve($parentId, $id, $params = null, $opts = null)
   {
-    return $this->request(PaymentMethodService::OBJECT_NAME, 'get', $this->buildPath('/user/customers/v1/%s/wallet/%s', $parentId, $id), $params, $opts);
+    return $this->request(PaymentMethodService::OBJECT_NAME, 'get', $this->buildPath(':4040/customers/v1/%s/wallet/%s', $parentId, $id), $params, $opts);
   }
 
   /**
@@ -54,6 +54,6 @@ class PaymentMethodService extends \Safepay\Service\AbstractService
    */
   public function delete($parentId, $id, $params = null, $opts = null)
   {
-    return $this->request(\Safepay\BaseDeleted::OBJECT_NAME, 'delete', $this->buildPath('/user/customers/v1/%s/wallet/%s', $parentId, $id), $params, $opts);
+    return $this->request(\Safepay\BaseDeleted::OBJECT_NAME, 'delete', $this->buildPath(':4040/customers/v1/%s/wallet/%s', $parentId, $id), $params, $opts);
   }
 }

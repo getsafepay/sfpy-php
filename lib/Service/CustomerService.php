@@ -21,7 +21,7 @@ class CustomerService extends \Safepay\Service\AbstractService
    */
   public function all($params = null, $opts = null)
   {
-    return $this->requestCollection('get', '/user/customers/v1/', $params, $opts);
+    return $this->requestCollection('get', ':4040/customers/v1/', $params, $opts);
   }
 
   /**
@@ -36,7 +36,7 @@ class CustomerService extends \Safepay\Service\AbstractService
    */
   public function create($params = null, $opts = null)
   {
-    return $this->request(CustomerService::OBJECT_NAME, 'post', '/user/customers/v1/', $params, $opts);
+    return $this->request(CustomerService::OBJECT_NAME, 'post', ':4040/customers/v1/', $params, $opts);
   }
 
   /**
@@ -55,7 +55,7 @@ class CustomerService extends \Safepay\Service\AbstractService
    */
   public function update($id, $params = null, $opts = null)
   {
-    return $this->request(CustomerService::OBJECT_NAME, 'put', $this->buildPath('/user/customers/v1/%s', $id), $params, $opts);
+    return $this->request(CustomerService::OBJECT_NAME, 'put', $this->buildPath(':4040/customers/v1/%s', $id), $params, $opts);
   }
 
   /**
@@ -71,7 +71,7 @@ class CustomerService extends \Safepay\Service\AbstractService
    */
   public function retrieve($id, $params = null, $opts = null)
   {
-    return $this->request(CustomerService::OBJECT_NAME, 'get', $this->buildPath('/user/customers/v1/%s', $id), $params, $opts);
+    return $this->request(CustomerService::OBJECT_NAME, 'get', $this->buildPath(':4040/customers/v1/%s', $id), $params, $opts);
   }
 
   /**
@@ -87,6 +87,6 @@ class CustomerService extends \Safepay\Service\AbstractService
    */
   public function delete($id, $params = null, $opts = null)
   {
-    return $this->request(\Safepay\BaseDeleted::OBJECT_NAME, 'delete', $this->buildPath('/user/customers/v1/%s', $id), $params, $opts);
+    return $this->request(\Safepay\BaseDeleted::OBJECT_NAME, 'delete', $this->buildPath(':4040/customers/v1/%s', $id), $params, $opts);
   }
 }

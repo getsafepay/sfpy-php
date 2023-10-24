@@ -18,7 +18,7 @@ class OrderService extends \Safepay\Service\AbstractService
    */
   public function setup($params = null, $opts = null)
   {
-    return $this->request(OrderService::OBJECT_NAME, 'post', '/order/payments/v3/', $params, $opts);
+    return $this->request(OrderService::OBJECT_NAME, 'post', ':4010/payments/v3/', $params, $opts);
   }
 
   /**
@@ -33,7 +33,7 @@ class OrderService extends \Safepay\Service\AbstractService
    */
   public function charge($id, $params = null, $opts = null)
   {
-    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath('/order/payments/v3/%s', $id), $params, $opts);
+    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath(':4010/payments/v3/%s', $id), $params, $opts);
   }
 
   /**
@@ -48,7 +48,7 @@ class OrderService extends \Safepay\Service\AbstractService
    */
   public function refund($id, $params = null, $opts = null)
   {
-    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath('/order/payments/v3/%s/refund', $id), $params, $opts);
+    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath(':4010/payments/v3/%s/refund', $id), $params, $opts);
   }
 
   /**
@@ -63,7 +63,7 @@ class OrderService extends \Safepay\Service\AbstractService
    */
   public function reverse($id, $params = null, $opts = null)
   {
-    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath('/order/payments/v3/%s/reversal', $id), $params, $opts);
+    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath(':4010/payments/v3/%s/reversal', $id), $params, $opts);
   }
 
   /**
@@ -78,7 +78,7 @@ class OrderService extends \Safepay\Service\AbstractService
    */
   public function void($id, $params = null, $opts = null)
   {
-    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath('/order/payments/v3/%s/void', $id), $params, $opts);
+    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath(':4010/payments/v3/%s/void', $id), $params, $opts);
   }
 
   /**
@@ -93,6 +93,6 @@ class OrderService extends \Safepay\Service\AbstractService
    */
   public function metadata($id, $params = null, $opts = null)
   {
-    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath('/order/payments/v3/%s/metadata', $id), $params, $opts);
+    return $this->request(OrderService::OBJECT_NAME, 'post', $this->buildPath(':4010/payments/v3/%s/metadata', $id), $params, $opts);
   }
 }

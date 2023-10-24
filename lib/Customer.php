@@ -6,7 +6,7 @@ namespace Safepay;
 class Customer extends ApiResource
 {
   const OBJECT_NAME = 'customer';
-  const OBJECT_PATH = 'user.customers.v1';
+  const OBJECT_PATH = ':4040.customers.v1';
 
 
   use ApiOperations\All;
@@ -16,7 +16,7 @@ class Customer extends ApiResource
   public function instanceUrl()
   {
     if (null === $this['token']) {
-      return '/user/customers/v1/';
+      return ':4040/customers/v1/';
     }
 
     return parent::instanceUrl();
@@ -56,7 +56,7 @@ class Customer extends ApiResource
   {
     $url = $this->instanceUrl() . '/wallet/';
     list($response, $opts) = $this->_request('get', $url, $params, $opts);
-    $obj = \Safepay\Util\Util::convertToSafepayObject(Collection::OBJECT_NAME, $response->json, $opts);
+    $obj = \Safepay\Util\Util::convertToSafepayObject(Collection::OBJECT_NAME, $response, $opts);
     $obj->setLastResponse($response);
 
     return $obj;

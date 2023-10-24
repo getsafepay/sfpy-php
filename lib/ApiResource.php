@@ -29,7 +29,7 @@ abstract class ApiResource extends SafepayObject
     /** @phpstan-ignore-next-line */
     $base = \str_replace('.', '/', static::OBJECT_PATH);
 
-    return "/{$base}/";
+    return "{$base}";
   }
   /**
    * @param null|string $id the Token of the resource
