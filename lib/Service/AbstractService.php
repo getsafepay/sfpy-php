@@ -59,6 +59,12 @@ abstract class AbstractService
     return $this->getClient()->request($resource, $method, $path, self::formatParams($params), $opts);
   }
 
+  protected function requestCollection($method, $path, $params, $opts)
+  {
+    // @phpstan-ignore-next-line
+    return $this->getClient()->requestCollection($method, $path, self::formatParams($params), $opts);
+  }
+
   protected function buildPath($basePath, ...$ids)
   {
     foreach ($ids as $id) {

@@ -92,6 +92,29 @@ class BaseSafepayClient implements SafepayClientInterface
   }
 
   /**
+   * Sends a request to Safepay's API.
+   *
+   * @param 'delete'|'get'|'post' $method the HTTP method
+   * @param string $path the path of the request
+   * @param array $params the parameters of the request
+   * @param array|\Safepay\Util\RequestOptions $opts the special modifiers of the request
+   *
+   * @return \Safepay\Collection of ApiResources
+   */
+  public function requestCollection($method, $path, $params, $opts)
+  {
+    $obj = $this->request(\Safepay\Collection::OBJECT_NAME, $method, $path, $params, $opts);
+    if (!($obj instanceof \Safepay\Collection)) {
+      $received_class = \get_class($obj);
+      $msg = "Expected to receive `Safepay\\Collection` object from Safepay API. Instead received `{$received_class}`.";
+
+      throw new \Safepay\Exception\UnexpectedValueException($msg);
+    }
+
+    return $obj;
+  }
+
+  /**
    * @param \Safepay\Util\RequestOptions $opts
    *
    * @throws \Safepay\Exception\AuthenticationException

@@ -18,4 +18,6 @@ interface SafepayClientInterface extends BaseSafepayClientInterface
    * @return \Safepay\SafepayObject the object returned by Safepay's API
    */
   public function request($resource, $method, $path, $params, $opts);
+
+  public function requestCollection($method, $path, $params, $opts);
 }

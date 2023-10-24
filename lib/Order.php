@@ -24,4 +24,14 @@ class Order extends ApiResource
 
     return parent::instanceUrl();
   }
+
+  public function charge($params = null, $opts = null)
+  {
+    $url = $this->instanceUrl();
+    list($response, $opts) = $this->_request('post', $url, $params, $opts);
+    $obj = \Safepay\Util\Util::convertToSafepayObject(Order::OBJECT_NAME, $response, $opts);
+    $obj->setLastResponse($response);
+
+    return $obj;
+  }
 }

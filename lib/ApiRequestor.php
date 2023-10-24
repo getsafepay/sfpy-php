@@ -51,12 +51,7 @@ class ApiRequestor
     if ($d instanceof ApiResource) {
       return Util\Util::utf8($d->id);
     }
-    if (true === $d) {
-      return 'true';
-    }
-    if (false === $d) {
-      return 'false';
-    }
+
     if (\is_array($d)) {
       $res = [];
       foreach ($d as $k => $v) {

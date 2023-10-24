@@ -46,14 +46,14 @@ abstract class Util
   {
 
     $types = \Safepay\Util\ObjectTypes::mapping;
-    if (self::isList($resp)) {
-      $mapped = [];
-      foreach ($resp as $i) {
-        $mapped[] = self::convertToSafepayObject($resource, $i, $opts);
-      }
+    // if (self::isList($resp)) {
+    //   $mapped = [];
+    //   foreach ($resp as $i) {
+    //     $mapped[] = self::convertToSafepayObject($resource, $i, $opts);
+    //   }
 
-      return $mapped;
-    }
+    //   return $mapped;
+    // }
     if (\is_array($resp)) {
       if (isset($resource) && isset($types[$resource])) {
         $class = $types[$resource];
