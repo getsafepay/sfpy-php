@@ -304,7 +304,7 @@ class CurlClient implements ClientInterface
         $msg = "Could not connect to Safepay ({$url}).  Please check your "
           . 'internet connection and try again.  If this problem persists, '
           . "you should check Safepay's service status at "
-          . 'https://twitter.com/stripestatus, or';
+          . 'https://safepay.betteruptime.com, or';
 
         break;
 
@@ -321,7 +321,7 @@ class CurlClient implements ClientInterface
         $msg = 'Unexpected error communicating with Safepay.  '
           . 'If this problem persists,';
     }
-    $msg .= ' let us know at support@stripe.com.';
+    $msg .= ' let us know at support@getsafepay.com.';
 
     $msg .= "\n\n(Network error [errno {$errno}]: {$message})";
 

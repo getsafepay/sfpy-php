@@ -27,4 +27,22 @@ class Safepay
   {
     self::$apiKey = $apiKey;
   }
+
+  /**
+   * @return string the API key used for requests
+   */
+  public static function getApiBase()
+  {
+    return self::$apiBase;
+  }
+
+  /**
+   * Sets the API key to be used for requests.
+   *
+   * @param string $apiBase
+   */
+  public static function setApiBase($apiBase)
+  {
+    self::$apiBase = $apiBase;
+  }
 }

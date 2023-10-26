@@ -56,7 +56,7 @@ class Customer extends ApiResource
   {
     $url = $this->instanceUrl() . '/wallet/';
     list($response, $opts) = $this->_request('get', $url, $params, $opts);
-    $obj = \Safepay\Util\Util::convertToSafepayObject(Collection::OBJECT_NAME, $response->json, $opts);
+    $obj = \Safepay\Util\Util::convertToSafepayObject(Collection::OBJECT_NAME, $response, $opts);
     $obj->setLastResponse($response);
 
     return $obj;

@@ -31,7 +31,7 @@ trait All
         'Expected type ' . \Safepay\Collection::class . ', got "' . \get_class($obj) . '" instead.'
       );
     }
-    $obj->setLastResponse($response);
+    //$obj->setLastResponse($response);
 
     return $obj;
   }
