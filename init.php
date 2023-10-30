@@ -50,6 +50,7 @@ require __DIR__ . '/lib/SafepayClient.php';
 
 require __DIR__ . '/lib/Collection.php';
 require __DIR__ . '/lib/Order.php';
+require __DIR__ . '/lib/Tracker.php';
 require __DIR__ . '/lib/Customer.php';
 require __DIR__ . '/lib/PaymentMethod.php';
 

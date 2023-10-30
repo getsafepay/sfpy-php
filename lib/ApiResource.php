@@ -51,7 +51,7 @@ abstract class ApiResource extends SafepayObject
     $base = static::classUrl();
     $extn = \urlencode($id);
 
-    return "{$base}/{$extn}";
+    return "{$base}{$extn}";
   }
 
   /**
