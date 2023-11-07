@@ -113,9 +113,8 @@ http_response_code(200);
 
 ## Securing Webhooks
 
-```
-Safepay requires the raw body of the request to perform signature verification. If you’re using a framework, make sure it doesn’t manipulate the raw body. Any manipulation to the raw body of the request causes the verification to fail.
-```
+> **Note**
+> Safepay requires the raw body of the request to perform signature verification. If you’re using a framework, make sure it doesn’t manipulate the raw body. Any manipulation to the raw body of the request causes the verification to fail.
 
 ```php
 // Set your secret key. Remember to switch to your live secret key in production.
