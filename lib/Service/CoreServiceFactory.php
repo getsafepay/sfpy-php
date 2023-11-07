@@ -17,7 +17,8 @@ class CoreServiceFactory extends \Safepay\Service\AbstractServiceFactory
   private static $classMap = [
     'order' => OrderService::class,
     'customer' => CustomerService::class,
-    'paymentMethod' => PaymentMethodService::class
+    'paymentMethod' => PaymentMethodService::class,
+    'passport' => PassportService::class
   ];
 
   protected function getServiceClass($name)

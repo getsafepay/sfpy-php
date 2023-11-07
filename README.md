@@ -68,3 +68,96 @@ $safepay = new \Safepay\SafepayClient([
   'api_base' => 'https://sandbox.api.getsafepay.com'
 ]);
 ```
+
+## Webhooks
+
+When building Safepay integrations, you might want your applications to receive events as they occur in your Safepay accounts, so that your backend systems can execute actions accordingly.
+
+To enable webhook events, you need to register webhook endpoints. After you register them, Safepay can push real-time event data to your application’s webhook endpoint when events happen in your Safepay account. Safepay uses HTTPS to send webhook events to your app as a JSON payload that includes an Event object.
+
+Receiving webhook events are particularly useful for listening to asynchronous events such as when a customer’s bank confirms a payment, a customer disputes a charge, a recurring payment succeeds, or when collecting subscription payments.
+
+Once you have set up an endpoint on your server to receive webhooks from Safepay, you will want to execute certain actions based on the type of the event received. Once done with your execution, you must send a `200` response code back to Safepay to acknowledge receipt of the webhook. If Safepay does not receive a `200` response code, the webhook will be fired again.
+
+This code snippet is a webhook function configured to check that the event type was received, to handle the event, and return a 200 response.
+
+```php
+$payload = @file_get_contents('php://input');
+$event = null;
+
+try {
+    $event = \Safepay\Event::constructFrom(
+        json_decode($payload, true)
+    );
+} catch(\UnexpectedValueException $e) {
+    // Invalid payload
+    http_response_code(400);
+    exit();
+}
+
+// Handle the event
+switch ($event->type) {
+    case 'payment.succeeded':
+        $payment = $event->data;
+        break;
+    case 'payment.failed':
+        $payment = $event->data;
+        break;
+    // ... handle other event types
+    default:
+        echo 'Received unknown event type ' . $event->type;
+}
+
+http_response_code(200);
+```
+
+## Securing Webhooks
+
+```
+Safepay requires the raw body of the request to perform signature verification. If you’re using a framework, make sure it doesn’t manipulate the raw body. Any manipulation to the raw body of the request causes the verification to fail.
+```
+
+```php
+// Set your secret key. Remember to switch to your live secret key in production.
+// See your keys here: https://getsafepay.com/dashboard/developers
+\Safepay\Safepay::setApiKey('sec_4eC39HqLyjWDarjtT1zdp7dc');
+
+// You can ind your endpoint's secret in your webhook settings in the Developer Dashboard
+$webhook_secret = '234hjkasd....';
+
+$payload = @file_get_contents('php://input');
+$sig_header = $_SERVER['X-SFPY-SIGNATURE'];
+$event = null;
+
+try {
+    $event = \Safepay\Webhook::constructEvent(
+        $payload, $sig_header, $webhook_secret
+    );
+} catch(\UnexpectedValueException $e) {
+    // Invalid payload
+  http_response_code(400);
+  echo json_encode(['Error parsing payload: ' => $e->getMessage()]);
+  exit();
+} catch(\Safepay\Exception\SignatureVerificationException $e) {
+    // Invalid signature
+    http_response_code(400);
+    echo json_encode(['Error verifying webhook signature: ' => $e->getMessage()]);
+    exit();
+}
+
+// Handle the event
+switch ($event->type) {
+    case 'payment.succeeded':
+        $payment = $event->data;
+        break;
+    case 'payment.failed':
+        $payment = $event->data;
+        break;
+    // ... handle other event types
+    default:
+        echo 'Received unknown event type ' . $event->type;
+}
+
+http_response_code(200);
+
+```

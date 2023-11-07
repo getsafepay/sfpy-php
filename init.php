@@ -53,8 +53,14 @@ require __DIR__ . '/lib/Order.php';
 require __DIR__ . '/lib/Tracker.php';
 require __DIR__ . '/lib/Customer.php';
 require __DIR__ . '/lib/PaymentMethod.php';
+require __DIR__ . '/lib/Passport.php';
 
 require __DIR__ . '/lib/Service/CoreServiceFactory.php';
 require __DIR__ . '/lib/Service/OrderService.php';
 require __DIR__ . '/lib/Service/CustomerService.php';
 require __DIR__ . '/lib/Service/PaymentMethodService.php';
+require __DIR__ . '/lib/Service/PassportService.php';
+
+// Webhooks
+require __DIR__ . '/lib/Webhook.php';
+require __DIR__ . '/lib/WebhookSignature.php';
