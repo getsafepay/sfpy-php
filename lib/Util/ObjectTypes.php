@@ -15,5 +15,6 @@ class ObjectTypes
     \Safepay\PaymentMethod::OBJECT_NAME => \Safepay\PaymentMethod::class,
     \Safepay\Passport::OBJECT_NAME => \Safepay\Passport::class,
     \Safepay\Event::OBJECT_NAME => \Safepay\Event::class,
+    \Safepay\Address::OBJECT_NAME => \Safepay\Address::class,
   ];
 }
