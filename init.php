@@ -66,3 +66,6 @@ require __DIR__ . '/lib/Service/AddressService.php';
 // Webhooks
 require __DIR__ . '/lib/Webhook.php';
 require __DIR__ . '/lib/WebhookSignature.php';
+
+// Checkout
+require __DIR__ . '/lib/Checkout.php';

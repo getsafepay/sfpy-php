@@ -69,6 +69,67 @@ $safepay = new \Safepay\SafepayClient([
 ]);
 ```
 
+## Checkout URLs
+
+When integrating Safepay, you may want to collect payment details from your customer to either securely tokenize their card or make a payment. For all of these different scenarios, your application will need to generate a URL to redirect your customers to so that they can complete the required steps on their side. This code snippet shows how you can generate a Checkout URL through which your customer can save their card on file.
+
+```php
+
+$safepay = new \Safepay\SafepayClient('BQokikJOvBiI2HlWgH4olfQ2');
+
+try {
+    // You need to generate a tracker with mode 'instrument'
+    // to tell Safepay that you wish to set up a tracker to
+    // tokenize a customer's card
+    $session = $safepay->order->setup([
+        "merchant_api_key" => "sec_8dcac601-4b70-442d-b198-03aadd28f12b",
+        "intent" => "CYBERSOURCE",
+        "mode" => "instrument"
+    ]);
+
+    // You need to either create a customer or retreive the customer
+    // from your backend so you have access to the customer ID
+    $customer = $safepay->customer->create([
+        "first_name" => "Hassan",
+        "last_name" => "Zaidi",
+        "email" => "hzaidi@getsafepay.com",
+        "phone_number" => "+923331234567",
+        "country" => "PK"
+    ]);
+
+    // You can optionally create an address object if you have
+    // access to the customer's billing details
+    $address = $safepay->address->create([
+        // required
+        "street1" => "3A-2 7th South Street",
+        "city" => "Karachi",
+        "country" => "PK",
+        // optional
+        "postal_code" => "75500",
+        "province" => "Sindh"
+    ]);
+    // You need to create a Time Based Authentication token
+    $tbt = $safepay->passport->create();
+
+    // Finally, you can create the Checkout URL
+    $checkoutURL = \Safepay\Checkout::constructURL([
+        "environment" => "production" // one of "development", "sandbox" or "production"
+        "tracker" => $session->tracker->token,
+        "user_id" => $customer->token,
+        "tbt" => $tbt,
+        "address" => $address->token,
+        "source" => "mobile" // important for rendering in a WebView
+    ]);
+    echo($checkoutURL);
+    return $checkoutURL;
+} catch(\UnexpectedValueException $e) {
+    // Invalid payload
+    http_response_code(400);
+    exit();
+}
+
+```
+
 ## Webhooks
 
 When building Safepay integrations, you might want your applications to receive events as they occur in your Safepay accounts, so that your backend systems can execute actions accordingly.
