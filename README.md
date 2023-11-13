@@ -113,7 +113,7 @@ try {
 
     // Finally, you can create the Checkout URL
     $checkoutURL = \Safepay\Checkout::constructURL([
-        "environment" => "production" // one of "development", "sandbox" or "production"
+        "environment" => "production", // one of "development", "sandbox" or "production"
         "tracker" => $session->tracker->token,
         "user_id" => $customer->token,
         "tbt" => $tbt,
