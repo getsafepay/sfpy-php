@@ -33,7 +33,7 @@ abstract class WebhookSignature
 
     // Check if expected signature is found in list of signatures from
     // header
-    $signedPayload = "{$payload}";
+    $signedPayload = $payload;
     $expectedSignature = self::computeSignature($signedPayload, $secret);
     $signatureFound = false;
     if (Util\Util::secureCompare($expectedSignature, $signature)) {
