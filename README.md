@@ -26,7 +26,7 @@ require_once 'vendor/autoload.php';
 
 ## Manual Installation
 
-If you do not wish to use Composer, you can download the [latest release](https://github.com/getsafepay/safepay-php/releases). Then, to use the bindings, include the `init.php` file.
+If you do not wish to use Composer, you can download the [latest release](https://github.com/getsafepay/sfpy-php/releases). Then, to use the bindings, include the `init.php` file.
 
 ```php
 require_once '/path/to/safepay-php/init.php';
@@ -84,7 +84,8 @@ try {
     $session = $safepay->order->setup([
         "merchant_api_key" => "sec_8dcac601-4b70-442d-b198-03aadd28f12b",
         "intent" => "CYBERSOURCE",
-        "mode" => "instrument"
+        "mode" => "instrument",
+        "currency" => "PKR"
     ]);
 
     // You need to either create a customer or retreive the customer

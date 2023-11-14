@@ -30,7 +30,7 @@ abstract class Checkout
    * Supported parameters that are required are
    * 1. `tracker`: The Tracker ID that is generated
    * 2. `environment`: One of 'development', 'sandbox' or 'production'
-   * 3. `customer`: The Customer ID that represents the customer making the purchase
+   * 3. `user_id`: The Customer ID that represents the customer making the purchase
    * 4. `tbt`: The Time Based Authentication token
    * 
    * Optional parameters are

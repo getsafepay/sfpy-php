@@ -62,7 +62,11 @@ abstract class Util
       }
 
       return $class::constructFrom($resp, $opts);
+    } else if (isset($resource) && isset($types[$resource])) {
+      $class = $types[$resource];
+      return $class::constructFrom($resp, $opts);
     }
+
     return $resp;
   }
 
