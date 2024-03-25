@@ -55,6 +55,7 @@ require __DIR__ . '/lib/Customer.php';
 require __DIR__ . '/lib/PaymentMethod.php';
 require __DIR__ . '/lib/Passport.php';
 require __DIR__ . '/lib/Address.php';
+require __DIR__ . '/lib/Plan.php';
 
 require __DIR__ . '/lib/Service/CoreServiceFactory.php';
 require __DIR__ . '/lib/Service/OrderService.php';
@@ -62,6 +63,7 @@ require __DIR__ . '/lib/Service/CustomerService.php';
 require __DIR__ . '/lib/Service/PaymentMethodService.php';
 require __DIR__ . '/lib/Service/PassportService.php';
 require __DIR__ . '/lib/Service/AddressService.php';
+require __DIR__ . '/lib/Service/PlanService.php';
 
 // Webhooks
 require __DIR__ . '/lib/Webhook.php';
@@ -69,3 +71,4 @@ require __DIR__ . '/lib/WebhookSignature.php';
 
 // Checkout
 require __DIR__ . '/lib/Checkout.php';
+require __DIR__ . '/lib/Subscribe.php';
