@@ -131,6 +131,40 @@ try {
 
 ```
 
+## Subscription URLs
+
+Safepay supports native subscriptions by allowing a customer to subscribe to a plan. In order for this to happen, your system will need to generate a secure URL to which the customer must be redirected to in order to complete the subscription. Safepay has created a secure, hosted page to collect sensitive information from your customer and allow them to subscribe to your plan. The code snippet shows how you can generate a Subscribe URL through which your customer can subscribe to your plan.
+
+```php
+
+$safepay = new \Safepay\SafepayClient('BQokikJOvBiI2HlWgH4olfQ2');
+
+try {
+    // Change this ID to reflect the ID of the Plan you have created
+    // either through the merchant dashboard or through the API.
+    $plan_id = "plan_d4869a78-0036-4d66-97bd-6afeb5282bcd"
+
+    // You need to create a Time Based Authentication token
+    $tbt = $safepay->passport->create();
+
+    // Finally, you can create the Subscribe URL
+    $subscribeURL = \Safepay\Subscribe::constructURL([
+        "environment" => "production", // one of "development", "sandbox" or "production"
+        "plan_id" => $plan_id,
+        "tbt" => $tbt,
+        "cancel_url" => "https://mywebiste.com/subscribe/cancel",
+        "redirect_url" => "https://mywebiste.com/subscribe/success",
+    ]);
+    echo($subscribeURL);
+    return $subscribeURL;
+} catch(\UnexpectedValueException $e) {
+    // Invalid payload
+    http_response_code(400);
+    exit();
+}
+
+```
+
 ## Webhooks
 
 When building Safepay integrations, you might want your applications to receive events as they occur in your Safepay accounts, so that your backend systems can execute actions accordingly.

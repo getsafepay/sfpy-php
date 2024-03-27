@@ -41,7 +41,7 @@ class CustomerService extends \Safepay\Service\AbstractService
 
   /**
    * Updates the specified customer by setting the values of the parameters passed.
-   * Any parameters not provided will be left unchanged. For example, if you pass the
+   * Any parameters not provided will be left unchanged.
    *
    * This request accepts mostly the same arguments as the customer creation call.
    *

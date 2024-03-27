@@ -19,7 +19,10 @@ class CoreServiceFactory extends \Safepay\Service\AbstractServiceFactory
     'customer' => CustomerService::class,
     'paymentMethod' => PaymentMethodService::class,
     'passport' => PassportService::class,
-    'address' => AddressService::class
+    'address' => AddressService::class,
+    'plan' => PlanService::class,
+    'subscription' => SubscriptionService::class,
+    'transaction' => TransactionService::class
   ];
 
   protected function getServiceClass($name)
