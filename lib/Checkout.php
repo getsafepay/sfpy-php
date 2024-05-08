@@ -18,6 +18,10 @@ abstract class Checkout
         $msg = "{$option} is missing.";
         throw new Exception\UnexpectedValueException($msg);
       }
+      if (isset($options["is_implicit"]) && $options["is_implicit"] !== "true") {
+        $msg = "to use is_implicit, the value must be a string and set to true";
+        throw new Exception\UnexpectedValueException($msg);
+      }
     }
   }
 
@@ -36,6 +40,10 @@ abstract class Checkout
    * Optional parameters are
    * 1. `source`: Either 'mobile' if you are rendering in a mobile webview or 'custom'
    * 2. `address`: The Address ID if you wish to prefil the customer's billing address.
+   * 3. `is_implicit`: To make card saving mandatory. Instead of a checkbox to confirm 
+   * whether to save the card or not, the customer is shown a disclaimer saying that their
+   * card will be saved for all future charges. This must be set to a string with value "true" 
+   * to be used.
    * @throws Exception\UnexpectedValueException if the payload is not valid JSON,
    *
    * @return string the Checkout URL
@@ -64,6 +72,10 @@ abstract class Checkout
 
     if (isset($options["address"])) {
       $params["address"] = $options["address"];
+    }
+
+    if (isset($options["is_implicit"])) {
+      $params["is_implicit"] = $options["is_implicit"];
     }
 
     $encoded = \http_build_query($params);
