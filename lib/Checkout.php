@@ -63,7 +63,7 @@ abstract class Checkout
     }
 
     $params = array(
-      "env" => $env,
+      "environment" => $env,
       "tracker" => $options["tracker"],
       "source" => $options["source"] ?? "custom",
       "tbt" => $options["tbt"],
