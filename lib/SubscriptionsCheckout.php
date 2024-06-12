@@ -3,7 +3,7 @@
 
 namespace Safepay;
 
-abstract class Checkout
+abstract class SubscriptionsCheckout
 {
   const DEV_BASE_URL = "https://dev.api.getsafepay.com";
   const SANDBOX_BASE_URL = "https://sandbox.api.getsafepay.com";
