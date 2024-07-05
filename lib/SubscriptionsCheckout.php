@@ -31,9 +31,10 @@ abstract class SubscriptionsCheckout
    * Supported parameters that are required are
    * 1. `plan_id`: The Plan ID of the plan that you want the customer to subscribe to
    * 2. `environment`: One of 'development', 'sandbox' or 'production'
-   * 3. `cancel_url`: The fully qualified URL to return the customer back to if they decide to cancel
+   * 3. `reference`: An identifier to match customers' subscription details with your internal order id.
+   * 4. `cancel_url`: The fully qualified URL to return the customer back to if they decide to cancel
    *     the flow
-   * 4. `redirect_url`: The fully qualified URL to return the customer back to afer they have subscribed. 
+   * 5. `redirect_url`: The fully qualified URL to return the customer back to afer they have subscribed. 
    *     This is usually a URL that returns the customer to a success page
    * 
    * @throws Exception\UnexpectedValueException if the payload is not valid JSON,
@@ -58,6 +59,7 @@ abstract class SubscriptionsCheckout
       "env" => $env,
       "plan_id" => $options["plan_id"],
       "auth_token" => $options["tbt"],
+      "reference" => $options["reference"],
       "cancel_url" => $options["cancel_url"],
       "redirect_url" => $options["redirect_url"],
     );
