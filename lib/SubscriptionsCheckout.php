@@ -69,6 +69,6 @@ abstract class SubscriptionsCheckout
     }
 
     $encoded = \http_build_query($params);
-    return $baseURL . "/subscribe?" . $encoded;
+    return $baseURL . "/checkout/subscribe?" . $encoded;
   }
 }
