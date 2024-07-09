@@ -54,15 +54,19 @@ abstract class SubscriptionsCheckout
     } else {
       $baseURL = self::PROD_BASE_URL;
     }
-
+    
     $params = array(
       "env" => $env,
       "plan_id" => $options["plan_id"],
       "auth_token" => $options["tbt"],
-      "reference" => $options["reference"],
       "cancel_url" => $options["cancel_url"],
       "redirect_url" => $options["redirect_url"],
     );
+
+    // Add reference if present
+    if (isset($options["reference"])) {
+      $params["reference"] = $options["reference"]; 
+    }
 
     $encoded = \http_build_query($params);
     return $baseURL . "/subscribe?" . $encoded;
