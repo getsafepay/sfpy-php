@@ -117,7 +117,7 @@ try {
         "environment" => "production", // one of "development", "sandbox" or "production"
         "tracker" => $session->tracker->token,
         "user_id" => $customer->token,
-        "tbt" => $tbt,
+        "tbt" => $tbt->token,
         "address" => $address->token,
         "source" => "mobile" // important for rendering in a WebView
     ]);
