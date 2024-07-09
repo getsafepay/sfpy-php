@@ -75,4 +75,4 @@ require __DIR__ . '/lib/WebhookSignature.php';
 
 // Checkout
 require __DIR__ . '/lib/Checkout.php';
-require __DIR__ . '/lib/Subscribe.php';
+require __DIR__ . '/lib/SubscriptionsCheckout.php';

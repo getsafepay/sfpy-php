@@ -43,7 +43,7 @@ try {
       "environment" => "sandbox",
       "plan_id" => $plan_id,
       "tbt" => $tbt->token,
-      // "reference" => $reference,
+      "reference" => $reference,
       "cancel_url" => "https://mywebiste.com/subscribe/cancel",
       "redirect_url" => "https://mywebiste.com/subscribe/success",
   ]);
