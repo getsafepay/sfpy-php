@@ -147,11 +147,16 @@ try {
     // You need to create a Time Based Authentication token
     $tbt = $safepay->passport->create();
 
+    // You need to change that to your internally generated reference (e.g order_id)
+    // to match subscription details upon receiving create subscription webhook.
+    $reference = "0950fa13-1a28-4529-80bf-89f6f4e830a5"
+
     // Finally, you can create the Subscribe URL
     $subscribeURL = \Safepay\Subscribe::constructURL([
         "environment" => "production", // one of "development", "sandbox" or "production"
         "plan_id" => $plan_id,
         "tbt" => $tbt,
+        "reference" => $reference
         "cancel_url" => "https://mywebiste.com/subscribe/cancel",
         "redirect_url" => "https://mywebiste.com/subscribe/success",
     ]);
