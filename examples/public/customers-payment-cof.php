@@ -172,6 +172,4 @@ $tracker = $safepay->order->charge($session->tracker->token, [
   instead would call the `charge` method with an empty payload to
   capture the payment.
 */ 
-$tracker = $safepay->order->charge($session->tracker->token, [
-  "payload" => []
-]);
+$tracker = $safepay->order->charge($session->tracker->token, new stdClass());
