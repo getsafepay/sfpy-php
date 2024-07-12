@@ -19,7 +19,7 @@ Configure your Safepay API key and secret inside `secrets.php`. You may find the
 
 Communicate with the Customers service and try out its CRUD methods. This example also shows CRUD methods for performing actions on a Customer's payment methods.
 
-Code: [customers.php](/public/customers.php)
+Code: [customers.php](./public/customers.php)
 
 ### Save a payment method for a customer
  
@@ -29,19 +29,19 @@ Note that while transactions can be initiated by merchants, the customer must sa
 
 The code in this example may be triggered from the UI to generate a checkout session URL.
 
-Code: [customers-instrument.php](/public/customers-instrument.php)
+Code: [customers-instrument.php](./public/customers-instrument.php)
 
 ### Charge a Customer on their saved payment method
 
 Perform a charge on your customer's behalf using a payment method from their wallet.
 
-Code: [customers-payment-ucof.php](/public/customers-payment-ucof.php)
+Code: [customers-payment-ucof.php](./public/customers-payment-ucof.php)
 
 ### Charge a Customer on their saved payment method with 3DS
 
 Have your customer go through payer authentication before making a charge.
 
-Code: [customers-payment-cof.php](/public/customers-payment-cof.php)
+Code: [customers-payment-cof.php](./public/customers-payment-cof.php)
 
 ## Examples: Subscriptions
 
@@ -53,4 +53,4 @@ Safepay has created a secure, hosted page to collect sensitive information from 
 
 The code in this example may be triggered from the UI to generate a subscriptions checkout URL.
 
-Code: [subscriptions-checkout.php](/public/subscriptions-checkout.php)
+Code: [subscriptions-checkout.php](./public/subscriptions-checkout.php)
