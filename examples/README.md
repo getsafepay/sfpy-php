@@ -35,7 +35,13 @@ Code: [customers-instrument.php](/public/customers-instrument.php)
 
 Perform a charge on your customer's behalf using a payment method from their wallet.
 
-Code: [customers-payment.php](/public/customers-payment.php)
+Code: [customers-payment-ucof.php](/public/customers-payment-ucof.php)
+
+### Charge a Customer on their saved payment method with 3DS
+
+Have your customer go through payer authentication before making a charge.
+
+Code: [customers-payment-cof.php](/public/customers-payment-cof.php)
 
 ## Examples: Subscriptions
 
