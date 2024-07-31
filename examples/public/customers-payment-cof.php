@@ -156,6 +156,11 @@ $tracker = $safepay->order->charge($session->tracker->token, [
   call the `charge` method to perform authorization. Note that this
   also performs capture if authorization is successful.
 
+  If the step-up URL is missing and the value for `veres_enrolled` is
+  `U`, then it means that the card is not enrolled in 3DS. You may
+  want to halt the payment flow at this point and display an error to
+  the customer.
+
   This action is documented here:
   https://apidocs.getsafepay.com/#6145b078-c3e7-4621-88de-373187bf6147
 */
