@@ -34,13 +34,13 @@ abstract class Checkout
    * Supported parameters that are required are
    * 1. `tracker`: The Tracker ID that is generated
    * 2. `environment`: One of 'development', 'sandbox' or 'production'
-   * 3. `user_id`: The Customer ID that represents the customer making the purchase
-   * 4. `tbt`: The Time Based Authentication token
+   * 3. `tbt`: The Time Based Authentication token
    * 
    * Optional parameters are
    * 1. `source`: Either 'mobile' if you are rendering in a mobile webview or 'custom'
    * 2. `address`: The Address ID if you wish to prefil the customer's billing address.
-   * 3. `is_implicit`: To make card saving mandatory. Instead of a checkbox to confirm 
+   * 3. `user_id`: The Customer ID that represents the customer making the purchase
+   * 4. `is_implicit`: To make card saving mandatory. Instead of a checkbox to confirm 
    * whether to save the card or not, the customer is shown a disclaimer saying that their
    * card will be saved for all future charges. This must be set to a string with value "true" 
    * to be used.
@@ -67,11 +67,22 @@ abstract class Checkout
       "tracker" => $options["tracker"],
       "source" => $options["source"] ?? "custom",
       "tbt" => $options["tbt"],
-      "user_id" => $options["customer"]
     );
 
+    // Set customer and address if available
+    if (isset($options["customer"])) {
+      $params["user_id"] = $options["customer"];
+    }
     if (isset($options["address"])) {
       $params["address"] = $options["address"];
+    }
+
+    // Set redirection URLs if available
+    if (isset($options["redirect_url"])) {
+      $params["redirect_url"] = $options["redirect_url"];
+    }
+    if (isset($options["cancel_url"])) {
+      $params["cancel_url"] = $options["cancel_url"];
     }
 
     if (isset($options["is_implicit"])) {
