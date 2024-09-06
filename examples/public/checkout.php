@@ -65,11 +65,12 @@ try {
     "environment" => "sandbox", // one of "development", "sandbox" or "production"
     "tracker" => $session->tracker->token,
     "tbt" => $tbt->token,
-    "customer" => "cus_nfsdknfjiasdnfasdf",
+    "source" => "woocommerce", // This triggers redirection but will eventually be replaced with a more appropriate value
     "cancel_url" => "https://example.com",
-    "redirect_url" => "https://www.google.com",
-    //"address" => $address->token, // If you wish to save the customer from having to enter their address details
-    "source" => "mobile" // Important for rendering in a mobile WebView but you may enter "custom" otherwise
+    "redirect_url" => "https://example.com",
+
+    // Optional. If you wish to save the customer from having to enter their address details
+    "address" => $address->token
   ]);
   echo ($checkoutURL);
   return $checkoutURL;

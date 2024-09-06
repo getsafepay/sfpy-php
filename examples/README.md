@@ -13,6 +13,14 @@ Configure your Safepay API key and secret inside `secrets.php`. You may find the
 - Run `php -S 127.0.0.1:8000`
 - Navigate to [localhost:8000](http://localhost:8000) on your browser
 
+## Examples: Payments
+
+### Checkout session
+
+Create a Safepay checkout session to accept a payment from your customer.
+
+Code: [checkout.php](./public/checkout.php)
+
 ## Examples: Customers
 
 ### Customers and Payment Methods

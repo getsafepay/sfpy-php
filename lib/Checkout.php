@@ -9,7 +9,7 @@ abstract class Checkout
   const SANDBOX_BASE_URL = "https://sandbox.api.getsafepay.com";
   const PROD_BASE_URL = "https://getsafepay.com";
 
-  const REQUIRED_OPTIONS = ['environment', 'tracker', 'customer', 'tbt'];
+  const REQUIRED_OPTIONS = ['environment', 'tracker', 'tbt'];
 
   private static function validateOptions($options)
   {
