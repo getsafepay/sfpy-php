@@ -65,7 +65,7 @@ try {
     "environment" => "sandbox", // one of "development", "sandbox" or "production"
     "tracker" => $session->tracker->token,
     "tbt" => $tbt->token,
-    "source" => "woocommerce", // This triggers redirection but will eventually be replaced with a more appropriate value
+    "source" => "hosted",
     "cancel_url" => "https://example.com",
     "redirect_url" => "https://example.com",
 
