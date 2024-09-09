@@ -41,6 +41,17 @@ try {
     "currency" => "PKR",
     "amount" => 10000 // In minor units of the currency e.g. in paisas
   ]);
+ 
+  // You can optionally associate a third-party order ID with your
+  // payment session for easy reconciliation. This can be done prior
+  // to the payment or after it. Once again, error handling has been
+  // ommitted for brevity.
+  $session = $safepay->order->metadata($session->tracker->token, [
+    "data" => [
+      "source" => "web-app",
+      "order_id" => "Order-123456"
+    ]
+  ]);
 
   // Optional. You may create an address object if you have
   // access to the customer's billing details. If not, the
