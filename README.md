@@ -142,7 +142,7 @@ $safepay = new \Safepay\SafepayClient('BQokikJOvBiI2HlWgH4olfQ2');
 try {
     // Change this ID to reflect the ID of the Plan you have created
     // either through the merchant dashboard or through the API.
-    $plan_id = "plan_d4869a78-0036-4d66-97bd-6afeb5282bcd"
+    $plan_id = "plan_d4869a78-0036-4d66-97bd-6afeb5282bcd";
 
     // You need to create a Time Based Authentication token
     $tbt = $safepay->passport->create();
@@ -150,14 +150,14 @@ try {
     // To ease reconciliation, you may associate a reference
     // that you generate in your system. This will be returned
     // in webhooks received when the subscription is created.
-    $reference = "0950fa13-1a28-4529-80bf-89f6f4e830a5"
+    $reference = "0950fa13-1a28-4529-80bf-89f6f4e830a5";
 
     // Finally, you can create the Subscribe URL
     $subscribeURL = \Safepay\SubscriptionsCheckout::constructURL([
         "environment" => "production", // one of "development", "sandbox" or "production"
         "plan_id" => $plan_id,
         "tbt" => $tbt,
-        "reference" => $reference
+        "reference" => $reference,
         "cancel_url" => "https://mywebiste.com/subscribe/cancel",
         "redirect_url" => "https://mywebiste.com/subscribe/success",
     ]);
