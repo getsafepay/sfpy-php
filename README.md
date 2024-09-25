@@ -227,7 +227,7 @@ http_response_code(200);
 $webhook_secret = '234hjkasd....';
 
 $payload = @file_get_contents('php://input');
-$sig_header = $_SERVER['X-SFPY-SIGNATURE'];
+$sig_header = $_SERVER['HTTP_X_SFPY_SIGNATURE'];
 $event = null;
 
 try {
