@@ -31,9 +31,9 @@ class RequestOptions
   public function __debugInfo()
   {
     return [
-      'apiKey' => $this->redactedApiKey(),
-      'headers' => $this->headers,
-      'apiBase' => $this->apiBase,
+      "apiKey" => $this->redactedApiKey(),
+      "headers" => $this->headers,
+      "apiBase" => $this->apiBase,
     ];
   }
 
@@ -55,7 +55,10 @@ class RequestOptions
     if (null === $other_options->apiBase) {
       $other_options->apiBase = $this->apiBase;
     }
-    $other_options->headers = \array_merge($this->headers, $other_options->headers);
+    $other_options->headers = \array_merge(
+      $this->headers,
+      $other_options->headers
+    );
 
     return $other_options;
   }
@@ -82,8 +85,9 @@ class RequestOptions
 
     if (\is_string($options)) {
       if ($strict) {
-        $message = 'Do not pass a string for request options. If you want to set the '
-          . 'API key, pass an array like ["api_key" => <apiKey>] instead.';
+        $message =
+          "Do not pass a string for request options. If you want to set the " .
+          'API key, pass an array like ["api_key" => <apiKey>] instead.';
 
         throw new \Safepay\Exception\InvalidArgumentException($message);
       }
@@ -96,17 +100,23 @@ class RequestOptions
       $key = null;
       $base = null;
 
-      if (\array_key_exists('api_key', $options)) {
-        $key = $options['api_key'];
-        unset($options['api_key']);
+      if (\array_key_exists("api_key", $options)) {
+        $key = $options["api_key"];
+        unset($options["api_key"]);
       }
-      if (\array_key_exists('api_base', $options)) {
-        $base = $options['api_base'];
-        unset($options['api_base']);
+      if (\array_key_exists("api_base", $options)) {
+        $base = $options["api_base"];
+        unset($options["api_base"]);
+      }
+      if (\array_key_exists("headers", $options)) {
+        $headers = $options["headers"];
+        unset($options["headers"]);
       }
 
       if ($strict && !empty($options)) {
-        $message = 'Got unexpected keys in options array: ' . \implode(', ', \array_keys($options));
+        $message =
+          "Got unexpected keys in options array: " .
+          \implode(", ", \array_keys($options));
 
         throw new \Safepay\Exception\InvalidArgumentException($message);
       }
@@ -119,16 +129,17 @@ class RequestOptions
   private function redactedApiKey()
   {
     if (null === $this->apiKey) {
-      return '';
+      return "";
     }
 
-    $pieces = \explode('_', $this->apiKey, 3);
+    $pieces = \explode("_", $this->apiKey, 3);
     $last = \array_pop($pieces);
-    $redactedLast = \strlen($last) > 4
-      ? (\str_repeat('*', \strlen($last) - 4) . \substr($last, -4))
-      : $last;
+    $redactedLast =
+      \strlen($last) > 4
+        ? \str_repeat("*", \strlen($last) - 4) . \substr($last, -4)
+        : $last;
     $pieces[] = $redactedLast;
 
-    return \implode('_', $pieces);
+    return \implode("_", $pieces);
   }
 }
