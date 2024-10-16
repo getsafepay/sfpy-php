@@ -5,12 +5,12 @@ namespace Safepay;
 class BaseSafepayClient implements SafepayClientInterface
 {
   /** @var string default base URL for Safepay's API */
-  const DEFAULT_API_BASE = 'https://api.getsafepay.com';
+  const DEFAULT_API_BASE = "https://api.getsafepay.com";
 
   /** @var array<string, null|string> */
   const DEFAULT_CONFIG = [
-    'api_key' => null,
-    'api_base' => self::DEFAULT_API_BASE
+    "api_key" => null,
+    "api_base" => self::DEFAULT_API_BASE,
   ];
 
   /** @var array<string, mixed> */
@@ -38,9 +38,11 @@ class BaseSafepayClient implements SafepayClientInterface
   public function __construct($config = [])
   {
     if (\is_string($config)) {
-      $config = ['api_key' => $config];
+      $config = ["api_key" => $config];
     } elseif (!\is_array($config)) {
-      throw new \Safepay\Exception\InvalidArgumentException('$config must be a string or an array');
+      throw new \Safepay\Exception\InvalidArgumentException(
+        '$config must be a string or an array'
+      );
     }
 
     $config = \array_merge(self::DEFAULT_CONFIG, $config);
@@ -56,7 +58,7 @@ class BaseSafepayClient implements SafepayClientInterface
    */
   public function getApiKey()
   {
-    return $this->config['api_key'];
+    return $this->config["api_key"];
   }
 
   /**
@@ -66,7 +68,7 @@ class BaseSafepayClient implements SafepayClientInterface
    */
   public function getApiBase()
   {
-    return $this->config['api_base'];
+    return $this->config["api_base"];
   }
 
   /**
@@ -81,11 +83,23 @@ class BaseSafepayClient implements SafepayClientInterface
    */
   public function request($resource, $method, $path, $params, $opts)
   {
-    $opts = new \Safepay\Util\RequestOptions(null, [], null);
+    $options = \Safepay\Util\RequestOptions::parse($opts);
     $baseUrl = $opts->apiBase ?: $this->getApiBase();
-    $requestor = new \Safepay\ApiRequestor($this->apiKeyForRequest($opts), $baseUrl);
-    list($response, $opts->apiKey) = $requestor->request($method, $path, $params, $opts->headers);
-    $obj = \Safepay\Util\Util::convertToSafepayObject($resource, $response->json, $opts);
+    $requestor = new \Safepay\ApiRequestor(
+      $this->apiKeyForRequest($opts),
+      $baseUrl
+    );
+    list($response, $opts->apiKey) = $requestor->request(
+      $method,
+      $path,
+      $params,
+      $opts->headers
+    );
+    $obj = \Safepay\Util\Util::convertToSafepayObject(
+      $resource,
+      $response->json,
+      $opts
+    );
     $obj->setLastResponse($response);
 
     return $obj;
@@ -103,7 +117,13 @@ class BaseSafepayClient implements SafepayClientInterface
    */
   public function requestCollection($method, $path, $params, $opts)
   {
-    $obj = $this->request(\Safepay\Collection::OBJECT_NAME, $method, $path, $params, $opts);
+    $obj = $this->request(
+      \Safepay\Collection::OBJECT_NAME,
+      $method,
+      $path,
+      $params,
+      $opts
+    );
     if (!($obj instanceof \Safepay\Collection)) {
       $received_class = \get_class($obj);
       $msg = "Expected to receive `Safepay\\Collection` object from Safepay API. Instead received `{$received_class}`.";
@@ -126,9 +146,10 @@ class BaseSafepayClient implements SafepayClientInterface
     $apiKey = $opts->apiKey ?: $this->getApiKey();
 
     if (null === $apiKey) {
-      $msg = 'No API key provided. Set your API key when constructing the '
-        . 'SafepayClient instance, or provide it on a per-request basis '
-        . 'using the `api_key` key in the $opts argument.';
+      $msg =
+        "No API key provided. Set your API key when constructing the " .
+        "SafepayClient instance, or provide it on a per-request basis " .
+        'using the `api_key` key in the $opts argument.';
 
       throw new \Safepay\Exception\AuthenticationException($msg);
     }
@@ -144,34 +165,46 @@ class BaseSafepayClient implements SafepayClientInterface
   private function validateConfig($config)
   {
     // api_key
-    if (null !== $config['api_key'] && !\is_string($config['api_key'])) {
-      throw new \Safepay\Exception\InvalidArgumentException('api_key must be null or a string');
+    if (null !== $config["api_key"] && !\is_string($config["api_key"])) {
+      throw new \Safepay\Exception\InvalidArgumentException(
+        "api_key must be null or a string"
+      );
     }
 
-    if (null !== $config['api_key'] && ('' === $config['api_key'])) {
-      $msg = 'api_key cannot be the empty string';
+    if (null !== $config["api_key"] && "" === $config["api_key"]) {
+      $msg = "api_key cannot be the empty string";
 
       throw new \Safepay\Exception\InvalidArgumentException($msg);
     }
 
-    if (null !== $config['api_key'] && (\preg_match('/\s/', $config['api_key']))) {
-      $msg = 'api_key cannot contain whitespace';
+    if (
+      null !== $config["api_key"] &&
+      \preg_match("/\s/", $config["api_key"])
+    ) {
+      $msg = "api_key cannot contain whitespace";
 
       throw new \Safepay\Exception\InvalidArgumentException($msg);
     }
 
     // api_base
-    if (!\is_string($config['api_base'])) {
-      throw new \Safepay\Exception\InvalidArgumentException('api_base must be a string');
+    if (!\is_string($config["api_base"])) {
+      throw new \Safepay\Exception\InvalidArgumentException(
+        "api_base must be a string"
+      );
     }
 
     // check absence of extra keys
-    $extraConfigKeys = \array_diff(\array_keys($config), \array_keys(self::DEFAULT_CONFIG));
+    $extraConfigKeys = \array_diff(
+      \array_keys($config),
+      \array_keys(self::DEFAULT_CONFIG)
+    );
     if (!empty($extraConfigKeys)) {
       // Wrap in single quote to more easily catch trailing spaces errors
       $invalidKeys = "'" . \implode("', '", $extraConfigKeys) . "'";
 
-      throw new \Safepay\Exception\InvalidArgumentException('Found unknown key(s) in configuration array: ' . $invalidKeys);
+      throw new \Safepay\Exception\InvalidArgumentException(
+        "Found unknown key(s) in configuration array: " . $invalidKeys
+      );
     }
   }
 }
