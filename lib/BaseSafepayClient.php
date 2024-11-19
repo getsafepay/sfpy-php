@@ -84,17 +84,34 @@ class BaseSafepayClient implements SafepayClientInterface
   public function request($resource, $method, $path, $params, $opts)
   {
     $options = \Safepay\Util\RequestOptions::parse($opts);
-    $baseUrl = $opts->apiBase ?: $this->getApiBase();
+
+    $baseUrl = isset($opts->apiBase) ? $opts->apiBase : $this->getApiBase();
+
     $requestor = new \Safepay\ApiRequestor(
       $this->apiKeyForRequest($opts),
       $baseUrl
     );
-    list($response, $opts->apiKey) = $requestor->request(
+
+    $headers = isset($opts->headers) ? $opts->headers : [];
+
+    if (!is_array($headers)) {
+      throw new \InvalidArgumentException('Headers must be an associative array.');
+  }
+
+  $defaultHeaders = [
+    'Content-Type' => 'application/json',
+    // Add other default headers as necessary
+];
+
+  $headers = array_merge($defaultHeaders, $headers);
+
+    list($response) = $requestor->request(
       $method,
       $path,
       $params,
-      $opts->headers
+      $headers
     );
+    
     $obj = \Safepay\Util\Util::convertToSafepayObject(
       $resource,
       $response->json,
@@ -143,7 +160,7 @@ class BaseSafepayClient implements SafepayClientInterface
    */
   private function apiKeyForRequest($opts)
   {
-    $apiKey = $opts->apiKey ?: $this->getApiKey();
+    $apiKey = isset($opts->apiKey) ? $opts->apiKey : $this->getApiKey();
 
     if (null === $apiKey) {
       $msg =
