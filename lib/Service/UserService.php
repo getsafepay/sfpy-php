@@ -2,8 +2,6 @@
 
 namespace Safepay\Service;
 
-use Safepay\BaseDeleted;
-
 class UserService extends \Safepay\Service\AbstractService
 {
 
@@ -36,7 +34,7 @@ class UserService extends \Safepay\Service\AbstractService
    */
   public function changePassword($params = null, $opts = null)
   {
-    return $this->request(UserService::OBJECT_NAME, 'post', '/user/v2/change-password', $params, $opts);
+    return $this->request(UserService::OBJECT_NAME, 'post', '/user/v2/change-password/', $params, $opts);
   }
 
 }

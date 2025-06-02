@@ -103,6 +103,9 @@ class SafepayObject implements \ArrayAccess, \Countable, \JsonSerializable
    */
   public function updateAttributes($values, $opts = null)
   {
+    if (!is_array($values)){
+        return;
+    }
     foreach ($values as $k => $v) {
       // Special-case metadata to always be cast as a SafepayObject
       // This is necessary in case metadata is empty, as PHP arrays do
