@@ -9,6 +9,7 @@ class BaseSafepayClient implements SafepayClientInterface
 
   /** @var array<string, null|string> */
   const DEFAULT_CONFIG = [
+    "auth_type" => "secret",
     "api_key" => null,
     "api_base" => self::DEFAULT_API_BASE,
   ];
@@ -72,6 +73,16 @@ class BaseSafepayClient implements SafepayClientInterface
   }
 
   /**
+   * Gets the auth type for Safepay's API.
+   *
+   * @return string the auth type
+   */
+  public function getAuthType()
+  {
+    return $this->config["auth_type"];
+  }
+
+  /**
    * Sends a request to Safepay's API.
    *
    * @param 'delete'|'get'|'post'|'put' $method the HTTP method
@@ -88,6 +99,7 @@ class BaseSafepayClient implements SafepayClientInterface
     $baseUrl = isset($opts->apiBase) ? $opts->apiBase : $this->getApiBase();
 
     $requestor = new \Safepay\ApiRequestor(
+      $this->authTypeForRequest($opts),
       $this->apiKeyForRequest($opts),
       $baseUrl
     );
@@ -158,18 +170,23 @@ class BaseSafepayClient implements SafepayClientInterface
    *
    * @return string
    */
+  private function authTypeForRequest($opts)
+  {
+    $authType = isset($opts->authType) ? $opts->authType : $this->getAuthType();
+
+    return $authType;
+  }
+
+  /**
+   * @param \Safepay\Util\RequestOptions $opts
+   *
+   * @throws \Safepay\Exception\AuthenticationException
+   *
+   * @return string
+   */
   private function apiKeyForRequest($opts)
   {
     $apiKey = isset($opts->apiKey) ? $opts->apiKey : $this->getApiKey();
-
-    if (null === $apiKey) {
-      $msg =
-        "No API key provided. Set your API key when constructing the " .
-        "SafepayClient instance, or provide it on a per-request basis " .
-        'using the `api_key` key in the $opts argument.';
-
-      throw new \Safepay\Exception\AuthenticationException($msg);
-    }
 
     return $apiKey;
   }
@@ -181,8 +198,32 @@ class BaseSafepayClient implements SafepayClientInterface
    */
   private function validateConfig($config)
   {
+    // auth_type 
+    if (null !== $config["auth_type"] && "" === $config["auth_type"]) {
+      $msg = "auth_type cannot be the empty string";
+
+      throw new \Safepay\Exception\InvalidArgumentException($msg);
+    }
+
+    if (
+      null !== $config["auth_type"] &&
+      \preg_match("/\s/", $config["auth_type"])
+    ) {
+      $msg = "auth_type cannot contain whitespace";
+
+      throw new \Safepay\Exception\InvalidArgumentException($msg);
+    }
+
+    if (
+      $config["auth_type"] !== null &&
+      !in_array($config["auth_type"], ['jwt', 'secret'], true)
+    ) {
+      $msg = "auth_type must be one of 'jwt' or 'secret'";
+      throw new \Safepay\Exception\InvalidArgumentException($msg);
+    }
+
     // api_key
-    if (null !== $config["api_key"] && !\is_string($config["api_key"])) {
+    if (null !== $config["api_key"] && !\is_string($config["auth_type"])) {
       throw new \Safepay\Exception\InvalidArgumentException(
         "api_key must be null or a string"
       );

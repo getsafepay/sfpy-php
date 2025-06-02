@@ -1,12 +1,17 @@
 <?php
 
 namespace Safepay;
-
 /**
  * Class ApiRequestor.
  */
 class ApiRequestor
 {
+
+  /**
+   * @var null|string
+   */
+  private $_authType;
+
   /**
    * @var null|string
    */
@@ -30,8 +35,9 @@ class ApiRequestor
    * @param null|string $apiKey
    * @param null|string $apiBase
    */
-  public function __construct($apiKey = null, $apiBase = null)
+  public function __construct($authType = null, $apiKey = null, $apiBase = null)
   {
+    $this->_authType = $authType;
     $this->_apiKey = $apiKey;
     if (!$apiBase) {
       $apiBase = Safepay::$apiBase;
@@ -94,23 +100,41 @@ class ApiRequestor
    *
    * @return array
    */
-  private static function _defaultHeaders($apiKey, $clientInfo = null)
+  private static function _defaultHeaders($authType, $apiKey, $clientInfo = null)
   {
-    return [
-      'X-SFPY-MERCHANT-SECRET' => $apiKey
-    ];
+    if (null === $apiKey) {
+        return [];
+    }
+    if ('secret' === $authType) {
+      return [
+        'X-SFPY-MERCHANT-SECRET' => $apiKey
+       ];
+    } else if ('jwt' === $authType) {
+      return [
+        'Authorization' => "Bearer " . $apiKey
+      ];
+    } else {
+        return [];
+    }
   }
 
   private function _prepareRequest($method, $url, $params, $headers)
   {
+    $myAuthType = $this->_authType;
     $myApiKey = $this->_apiKey;
+
     if (!$myApiKey) {
       $myApiKey = Safepay::$apiKey;
     }
 
-    if (!$myApiKey) {
+    $publicPaths = [
+      '/user/v2/',
+      '/auth/v2/user/login'
+    ];
+
+    if (!$myApiKey && !in_array($url, $publicPaths, true)) {
       $msg = 'No API key provided.  (HINT: set your API key using '
-        . '"Safepay::setApiKey(<API-KEY>)".  You can generate API keys from '
+        . '"Safepay::setApiKey(<API-KEY>)").  You can generate API keys from '
         . 'the Safepay web interface.  Email support@getsafepay.com if you have any questions.';
 
       throw new Exception\AuthenticationException($msg);
@@ -133,7 +157,10 @@ class ApiRequestor
 
     $absUrl = $this->_apiBase . $url;
     $params = self::_encodeObjects($params);
-    $defaultHeaders = $this->_defaultHeaders($myApiKey);
+
+    $defaultHeaders = $this->_defaultHeaders($myAuthType, $myApiKey);
+
+    print_r($defaultHeaders);
 
     $defaultHeaders['Content-Type'] = 'application/json';
 

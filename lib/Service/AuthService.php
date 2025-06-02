@@ -2,12 +2,10 @@
 
 namespace Safepay\Service;
 
-use Safepay\BaseDeleted;
-
 class AuthService extends \Safepay\Service\AbstractService
 {
 
-  const OBJECT_NAME = 'user';
+  const OBJECT_NAME = 'auth';
 
   /**
    * Logs a new user in.
@@ -17,11 +15,11 @@ class AuthService extends \Safepay\Service\AbstractService
    *
    * @throws \Safepay\Exception\ApiErrorException if the request fails
    *
-   * @return \Safepay\User
+   * @return \Safepay\Auth
    */
   public function login($params = null, $opts = null)
   {
-    return $this->request(UserService::OBJECT_NAME, 'post', '/auth/v2/user/login', $params, $opts);
+    return $this->request(AuthService::OBJECT_NAME, 'post', '/auth/v2/user/login', $params, $opts);
   }
 
 }
