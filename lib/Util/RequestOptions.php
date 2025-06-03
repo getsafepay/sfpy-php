@@ -8,6 +8,9 @@ class RequestOptions
   public $headers;
 
   /** @var null|string */
+  public $authType;
+
+  /** @var null|string */
   public $apiKey;
 
   /** @var null|string */
@@ -18,8 +21,9 @@ class RequestOptions
    * @param array<string, string> $headers
    * @param null|string $base
    */
-  public function __construct($key = null, $headers = [], $base = null)
+  public function __construct($type = null, $key = null, $headers = [], $base = null)
   {
+    $this->authType = $type;
     $this->apiKey = $key;
     $this->headers = $headers;
     $this->apiBase = $base;
@@ -31,6 +35,7 @@ class RequestOptions
   public function __debugInfo()
   {
     return [
+      "authType" => $this->authType,
       "apiKey" => $this->redactedApiKey(),
       "headers" => $this->headers,
       "apiBase" => $this->apiBase,
@@ -49,6 +54,9 @@ class RequestOptions
   public function merge($options, $strict = false)
   {
     $other_options = self::parse($options, $strict);
+    if (null === $other_options->authType) {
+      $other_options->authType = $this->authType;
+    }
     if (null === $other_options->apiKey) {
       $other_options->apiKey = $this->apiKey;
     }
