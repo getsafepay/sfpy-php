@@ -1,5 +1,5 @@
 {
   "require": {
-    "getsafepay/sfpy-php": "^0.0.20"
+    "getsafepay/sfpy-php": "^0.0.19"
   }
 }
