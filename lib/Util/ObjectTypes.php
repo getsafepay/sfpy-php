@@ -19,5 +19,6 @@ class ObjectTypes
     \Safepay\Plan::OBJECT_NAME => \Safepay\Plan::class,
     \Safepay\Subscription::OBJECT_NAME => \Safepay\Subscription::class,
     \Safepay\Transaction::OBJECT_NAME => \Safepay\Transaction::class,
+    \Safepay\Reporter::OBJECT_NAME => \Safepay\Reporter::class,
   ];
 }

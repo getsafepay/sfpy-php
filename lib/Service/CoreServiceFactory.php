@@ -22,7 +22,8 @@ class CoreServiceFactory extends \Safepay\Service\AbstractServiceFactory
     'address' => AddressService::class,
     'plan' => PlanService::class,
     'subscription' => SubscriptionService::class,
-    'transaction' => TransactionService::class
+    'transaction' => TransactionService::class,
+    'reporter' => ReporterService::class
   ];
 
   protected function getServiceClass($name)
