@@ -58,6 +58,7 @@ require __DIR__ . '/lib/Address.php';
 require __DIR__ . '/lib/Plan.php';
 require __DIR__ . '/lib/Subscription.php';
 require __DIR__ . '/lib/Transaction.php';
+require __DIR__ . '/lib/Reporter.php';
 
 require __DIR__ . '/lib/Service/CoreServiceFactory.php';
 require __DIR__ . '/lib/Service/OrderService.php';
