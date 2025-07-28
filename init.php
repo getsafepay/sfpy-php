@@ -69,6 +69,7 @@ require __DIR__ . '/lib/Service/AddressService.php';
 require __DIR__ . '/lib/Service/PlanService.php';
 require __DIR__ . '/lib/Service/SubscriptionService.php';
 require __DIR__ . '/lib/Service/TransactionService.php';
+require __DIR__ . '/lib/Service/ReporterService.php';
 
 // Webhooks
 require __DIR__ . '/lib/Webhook.php';
