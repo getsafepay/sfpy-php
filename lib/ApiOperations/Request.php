@@ -59,7 +59,7 @@ trait Request
   {
     $opts = \Safepay\Util\RequestOptions::parse($options);
     $baseUrl = isset($opts->apiBase) ? $opts->apiBase : static::baseUrl();
-    $requestor = new \Safepay\ApiRequestor($opts->apiKey, $baseUrl);
+    $requestor = new \Safepay\ApiRequestor($opts->authType, $opts->apiKey, $baseUrl);
     list($response, $opts->apiKey) = $requestor->request($method, $url, $params, $opts->headers);
 
     return [$response, $opts];

@@ -20,4 +20,11 @@ interface BaseSafepayClientInterface
    * @return string the base URL for Safepay's API
    */
   public function getApiBase();
+
+  /**
+   * Gets the auth type for Safepay's API.
+   *
+   * @return string the auth type
+   */
+  public function getAuthType();
 }
