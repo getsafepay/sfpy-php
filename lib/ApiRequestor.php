@@ -160,8 +160,6 @@ class ApiRequestor
 
     $defaultHeaders = $this->_defaultHeaders($myAuthType, $myApiKey);
 
-    print_r($defaultHeaders);
-
     $defaultHeaders['Content-Type'] = 'application/json';
 
     $combinedHeaders = \array_merge($defaultHeaders, $headers);
